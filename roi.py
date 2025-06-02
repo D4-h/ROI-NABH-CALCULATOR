@@ -114,7 +114,7 @@ st.markdown("""
 def load_procedures_data():
     try:
         # Try to load from CSV file first
-        return pd.read_csv(procedure.csv")
+        return pd.read_csv(procedure.csv)
     except FileNotFoundError:
         st.error("procedures.csv file not found. Using sample data.")
         # Fallback to sample data
@@ -144,7 +144,7 @@ def load_procedures_data():
 def load_location_data():
     try:
         # Try to load from CSV file first
-        return pd.read_csv(location.csv")
+        return pd.read_csv(location.csv)
     except FileNotFoundError:
         st.error("location.csv file not found. Using sample data.")
         # Fallback to sample data
