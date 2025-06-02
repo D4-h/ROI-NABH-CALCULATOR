@@ -231,7 +231,15 @@ procedures_df = load_procedures_data()
 location_df = load_location_data()
 
 # Metro cities list
-METRO_CITIES = ["Chennai", "Delhi", "Mumbai", "Kolkata", "Bengaluru", "Hyderabad", "Ahmedabad", "Pune", "New Delhi", "new delhi"]
+METRO_CITIES = ["Chennai", "chennai", "CHENNAI",
+    "Delhi", "delhi", "DELHI",
+    "Mumbai", "mumbai", "MUMBAI",
+    "Kolkata", "kolkata", "KOLKATA",
+    "Bengaluru", "bengaluru", "BENGALURU",
+    "Hyderabad", "hyderabad", "HYDERABAD",
+    "Ahmedabad", "ahmedabad", "AHMEDABAD",
+    "Pune", "pune", "PUNE",
+    "New Delhi", "new delhi", "NEW DELHI"]
 
 # Accreditation fee structures
 ENTRY_LEVEL_FEES = {
