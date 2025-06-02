@@ -110,13 +110,17 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load data from CSV files
+# Load data from CSV files
 @st.cache_data
 def load_procedures_data():
     try:
         # Try to load from CSV file first
-        return pd.read_csv("procedure.csv")
+        df = pd.read_csv("procedure.csv")
+        print(f"Successfully loaded procedure.csv with {len(df)} rows")
+        print(f"Columns: {df.columns.tolist()}")
+        return df
     except FileNotFoundError:
-        st.error("procedures.csv file not found. Using sample data.")
+        st.error("procedure.csv file not found. Using sample data.")
         # Fallback to sample data
         procedures_data = [
             {"Specialty": "Burns Management", "Specialty Code": "BM", "Package Name": "Thermal burns", 
@@ -137,16 +141,20 @@ def load_procedures_data():
         ]
         return pd.DataFrame(procedures_data)
     except Exception as e:
-        st.error(f"Error loading procedures.csv: {str(e)}")
-        return pd.DataFrame()
+        st.error(f"Error loading procedure.csv: {str(e)}")
+        # Return empty DataFrame with expected columns if there's an error
+        return pd.DataFrame(columns=["Specialty", "Specialty Code", "Package Name", "Procedure Code", "Procedure Name", "Procedure Price"])
 
 @st.cache_data
 def load_location_data():
     try:
         # Try to load from CSV file first
-        return pd.read_csv("location.csv")
+        df = pd.read_csv("location2.csv")
+        print(f"Successfully loaded location2.csv with {len(df)} rows")
+        print(f"Columns: {df.columns.tolist()}")
+        return df
     except FileNotFoundError:
-        st.error("location.csv file not found. Using sample data.")
+        st.error("location2.csv file not found. Using sample data.")
         # Fallback to sample data
         location_data = [
             {"State": "Andhra Pradesh", "District": "Alluri Sitharama Raju", "Type": "Aspirational"},
@@ -175,8 +183,48 @@ def load_location_data():
         ]
         return pd.DataFrame(location_data)
     except Exception as e:
-        st.error(f"Error loading location.csv: {str(e)}")
-        return pd.DataFrame()
+        st.error(f"Error loading location2.csv: {str(e)}")
+        # Return empty DataFrame with expected columns if there's an error
+        return pd.DataFrame(columns=["State", "District", "Type"])
+
+# Add debugging information
+def debug_csv_files():
+    """Debug function to check if CSV files exist and their contents"""
+    import os
+    
+    st.write("**Debug Information:**")
+    
+    # Check current working directory
+    cwd = os.getcwd()
+    st.write(f"Current working directory: {cwd}")
+    
+    # List files in current directory
+    files_in_dir = os.listdir(cwd)
+    st.write(f"Files in directory: {files_in_dir}")
+    
+    # Check specific files
+    procedure_exists = os.path.exists("procedure.csv")
+    location_exists = os.path.exists("location2.csv")
+    
+    st.write(f"procedure.csv exists: {procedure_exists}")
+    st.write(f"location2.csv exists: {location_exists}")
+    
+    if procedure_exists:
+        try:
+            df = pd.read_csv("procedure.csv")
+            st.write(f"procedure.csv - Rows: {len(df)}, Columns: {df.columns.tolist()}")
+        except Exception as e:
+            st.write(f"Error reading procedure.csv: {e}")
+    
+    if location_exists:
+        try:
+            df = pd.read_csv("location2.csv")
+            st.write(f"location2.csv - Rows: {len(df)}, Columns: {df.columns.tolist()}")
+        except Exception as e:
+            st.write(f"Error reading location2.csv: {e}")
+
+# To use the debug function, add this to your main code:
+# debug_csv_files()
 
 # Load data
 procedures_df = load_procedures_data()
@@ -400,7 +448,7 @@ if st.button("Calculate ROI", type="primary"):
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; margin-top: 2rem;">
                     <div>
                         <div class="roi-number">₹{accreditation_fee:,}</div>
-                        <div>Investment Required</div>
+                        <div>Accreditation Fee</div>
                     </div>
                     <div>
                         <div class="roi-number">₹{total_monthly_additional_income:,.0f}</div>
