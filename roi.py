@@ -369,7 +369,7 @@ with col2:
                             monthly_volume = st.number_input(
                                 f"Monthly volume for {procedure['Procedure Code']}", 
                                 min_value=0, 
-                                value=5,
+                                value=0,
                                 key=f"volume_{procedure['Procedure Code']}"
                             )
                             
